@@ -3,7 +3,7 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "c0d146ea",
+   "id": "a8c31aaf",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -21,7 +21,7 @@
   {
    "cell_type": "code",
    "execution_count": 2,
-   "id": "35cb1eaf",
+   "id": "89ecea64",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -37,7 +37,7 @@
   {
    "cell_type": "code",
    "execution_count": 3,
-   "id": "b3f640c7",
+   "id": "37d47ba5",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -71,7 +71,7 @@
   {
    "cell_type": "code",
    "execution_count": 4,
-   "id": "20ef6238",
+   "id": "5a94eed9",
    "metadata": {},
    "outputs": [
     {
@@ -188,7 +188,7 @@
   {
    "cell_type": "code",
    "execution_count": 5,
-   "id": "a2248177",
+   "id": "dc3757f0",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -218,7 +218,7 @@
   {
    "cell_type": "code",
    "execution_count": 6,
-   "id": "ce55238c",
+   "id": "adcd4491",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -258,7 +258,7 @@
   {
    "cell_type": "code",
    "execution_count": 11,
-   "id": "76891a7d",
+   "id": "1bb78c36",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -296,7 +296,7 @@
   {
    "cell_type": "code",
    "execution_count": 12,
-   "id": "0106bcb7",
+   "id": "5b084727",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -304,15 +304,12 @@
     "    ''' Prepare zillow data for exploration'''\n",
     "\n",
     "    # removing outliers\n",
-    "    df = remove_outliers(df, 1.5, ['num_beds', 'num_baths', 'square_footage', 'tax_value', 'year_built', 'tax_amount'])\n",
+    "    df = remove_outliers(df, 1.5, ['num_beds', 'num_baths', 'square_footage', 'tax_value', 'tax_amount'])\n",
     "    \n",
     "    # Drop duplicates\n",
     "    df = df.drop_duplicates()\n",
     "    \n",
     "    # converting column datatypes\n",
-    "    df.num_beds = df.num_beds.astype(object)\n",
-    "    df.num_baths = df.num_baths.astype(object)\n",
-    "    df.square_footage = df.square_footage.astype(object)\n",
     "    df.year_built = df.year_built.astype(object)\n",
     "    df.fips = df.fips.astype(object)\n",
     "    \n",
@@ -331,7 +328,7 @@
   {
    "cell_type": "code",
    "execution_count": 13,
-   "id": "494ba2b5",
+   "id": "7f73b601",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -349,7 +346,7 @@
   {
    "cell_type": "code",
    "execution_count": 15,
-   "id": "98b9d236",
+   "id": "4964658b",
    "metadata": {},
    "outputs": [
     {
@@ -384,7 +381,7 @@
   {
    "cell_type": "code",
    "execution_count": 16,
-   "id": "d9ee6ab2",
+   "id": "d430cd26",
    "metadata": {},
    "outputs": [
     {
@@ -500,7 +497,7 @@
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "ed8da251",
+   "id": "1c2943d5",
    "metadata": {},
    "outputs": [],
    "source": []
