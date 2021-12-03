@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# ### Import
+
+# In[23]:
 
 
 import pandas as pd
@@ -17,6 +19,10 @@ from env import host, user, password
 import warnings
 warnings.filterwarnings("ignore")
 
+import sklearn.preprocessing
+
+
+# ### Acquire Data
 
 # In[2]:
 
@@ -67,6 +73,8 @@ df = get_zillow_data()
 df.head()
 
 
+# ### Remove Outliers
+
 # In[5]:
 
 
@@ -104,6 +112,8 @@ split_df = df[['num_beds', 'num_baths', 'square_footage', 'tax_value']]
 
 target = df.tax_value
 
+
+# ### Visually Explore Individual Variables
 
 # In[8]:
 
@@ -175,6 +185,8 @@ def get_box(df):
     plt.show()
 
 
+# ### Prepare Data
+
 # In[10]:
 
 
@@ -206,6 +218,8 @@ def prepare_zillow(df):
 
     return train, validate, test 
 
+
+# ### Acquire, Prep, and Split
 
 # In[11]:
 
@@ -251,6 +265,8 @@ validate.shape
 test.shape
 
 
+# ### Split into X and y variables
+
 # In[17]:
 
 
@@ -281,6 +297,101 @@ train, validate, test, X_train, y_train, X_validate, y_validate, X_test, y_test 
 
 
 X_train.shape
+
+
+# ### Scaling Data
+
+# In[24]:
+
+
+def Min_Max_Scaler(X_train, X_validate, X_test):
+    """
+    Takes in X_train, X_validate and X_test dfs with numeric values only
+    Returns scaler, X_train_scaled, X_validate_scaled, X_test_scaled dfs 
+    """
+    #Fit the thing
+    scaler = sklearn.preprocessing.MinMaxScaler().fit(X_train)
+    
+    #transform the thing
+    X_train_scaled = pd.DataFrame(scaler.transform(X_train), index = X_train.index, columns = X_train.columns)
+    X_validate_scaled = pd.DataFrame(scaler.transform(X_validate), index = X_validate.index, columns = X_validate.columns)
+    X_test_scaled = pd.DataFrame(scaler.transform(X_test), index = X_test.index, columns = X_test.columns)
+    
+    return scaler, X_train_scaled, X_validate_scaled, X_test_scaled
+
+
+# In[25]:
+
+
+scaler, X_train_scaled, X_validate_scaled, X_test_scaled = Min_Max_Scaler(X_train, X_validate, X_test)
+
+
+# In[26]:
+
+
+X_train_scaled.shape
+
+
+# In[30]:
+
+
+def Standard_Scaler(X_train, X_validate, X_test):
+    """
+    Takes in X_train, X_validate and X_test dfs with numeric values only
+    Returns scaler, X_train_scaled, X_validate_scaled, X_test_scaled dfs
+    """
+
+    scaler = sklearn.preprocessing.StandardScaler().fit(X_train)
+    X_train_scaled = pd.DataFrame(scaler.transform(X_train), index = X_train.index, columns = X_train.columns)
+    X_validate_scaled = pd.DataFrame(scaler.transform(X_validate), index = X_validate.index, columns = X_validate.columns)
+    X_test_scaled = pd.DataFrame(scaler.transform(X_test), index = X_test.index, columns = X_test.columns)
+    
+    return scaler, X_train_scaled, X_validate_scaled, X_test_scaled
+
+
+# In[31]:
+
+
+scaler, X_train_scaled, X_validate_scaled, X_test_scaled = Standard_Scaler(X_train, X_validate, X_test)
+
+
+# In[32]:
+
+
+X_train_scaled.shape
+
+
+# ### Visualize Data
+
+# In[27]:
+
+
+#--------VISUALIZE THE SCALED DATA
+def visualize_scaled_date(scaler, scaler_name, feature):
+    scaled = scaler.fit_transform(train[[feature]])
+    fig = plt.figure(figsize = (12,6))
+
+    gs = plt.GridSpec(2,2)
+
+    ax1 = fig.add_subplot(gs[0, :])
+    ax2 = fig.add_subplot(gs[1,0])
+    ax3 = fig.add_subplot(gs[1,1])
+
+    ax1.scatter(train[[feature]], scaled)
+    ax1.set(xlabel = feature, ylabel = 'Scaled' + feature, title = scaler_name)
+
+    ax2.hist(train[[feature]])
+    ax2.set(title = 'Original')
+
+    ax3.hist(scaled)
+    ax3.set(title = 'Scaled')
+    plt.tight_layout();
+
+
+# In[29]:
+
+
+# visualize_scaled_date(sklearn.preprocessing.MinMaxScaler(), 'Min Max Scaler', 'num_beds')
 
 
 # In[ ]:
